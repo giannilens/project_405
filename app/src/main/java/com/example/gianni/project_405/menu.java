@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -15,7 +16,7 @@ import android.widget.Toast;
 
 public class menu extends AppCompatActivity implements OnClickListener {
 
-    @Override
+
     private Button scanBtn;
     private TextView formatTxt, contentTxt;
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +27,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
         contentTxt = (TextView)findViewById(R.id.scan_content);
         scanBtn.setOnClickListener(this);
     }
-}
+
 
     public void onClick(View v){
     //respond to clicks
@@ -36,4 +37,6 @@ public class menu extends AppCompatActivity implements OnClickListener {
         IntentIntegrator scanIntegrator = new IntentIntegrator(this);
         scanIntegrator.initiateScan();
     }
+}
+
 
