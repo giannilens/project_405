@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,13 +38,13 @@ public class menu extends AppCompatActivity implements OnClickListener {
             //scan
         }
         IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-        scanIntegrator.initiateScan();
+        scanIntegrator.initiateScan();//vraagt om de app te downloaden als die nog niet is gedownload
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
     //retrieve scan result
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if (scanningResult != null) {
+        if (scanningResult != null) {//hier gaat die kijken of er een data zit in intentResult zit deze functie
         //we have a result
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
