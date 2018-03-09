@@ -11,24 +11,24 @@ import android.content.Intent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.EditText;
 
 public class menu extends AppCompatActivity implements OnClickListener {
 
-
+    public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";//need to figure out why
     private Button scanBtn;
     private TextView formatTxt, contentTxt;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        scanBtn = (Button)findViewById(R.id.scan_button);
-        formatTxt = (TextView)findViewById(R.id.scan_format);
-        contentTxt = (TextView)findViewById(R.id.scan_content);
-        scanBtn.setOnClickListener(this);
-
-
+        scanBtn = findViewById(R.id.scan_button);
+        formatTxt = findViewById(R.id.scan_format);
+        contentTxt = findViewById(R.id.scan_content);
+        scanBtn = findViewById(R.id.login_button);
     }
 
 
@@ -58,6 +58,13 @@ public class menu extends AppCompatActivity implements OnClickListener {
         }
 
 
+    }
+        public void sendMessage(View view) {
+        Intent intent = new Intent(this, login_activity.class);
+        EditText editText = (EditText) findViewById(R.id.login_button);//
+        String message = editText.getText().toString();
+        intent.putExtra(EXTRA_MESSAGE, message);
+        startActivity(intent);
     }
 
 }
