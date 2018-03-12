@@ -20,15 +20,18 @@ import android.widget.EditText;
 public class menu extends AppCompatActivity implements OnClickListener {
 
     public static final String EXTRA_MESSAGE = "com.example.myfirstapp.MESSAGE";//need to figure out why
-    private Button scanBtn;
+    private Button scanBtn,loginBtn;
     private TextView formatTxt, contentTxt;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-        scanBtn = findViewById(R.id.scan_button);
-        formatTxt = findViewById(R.id.scan_format);
-        contentTxt = findViewById(R.id.scan_content);
-        scanBtn = findViewById(R.id.login_button);
+        scanBtn = (Button)findViewById(R.id.scan_button);
+        formatTxt = (TextView)findViewById(R.id.scan_format);
+        contentTxt = (TextView)findViewById(R.id.scan_content);
+        loginBtn = findViewById(R.id.login_button);
+        scanBtn.setOnClickListener(this);//makes programe listen to the click
+        loginBtn.setOnClickListener(this);
+
     }
 
 
@@ -59,12 +62,12 @@ public class menu extends AppCompatActivity implements OnClickListener {
 
 
     }
-        public void sendMessage(View view) {
-        Intent intent = new Intent(this, login_activity.class);
-        EditText editText = (EditText) findViewById(R.id.login_button);//
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
-        startActivity(intent);
+      public void sendMessage(View view) {
+      Intent intent = new Intent(this, login_activity.class);
+      EditText editText = (EditText) findViewById(R.id.login_button);//
+      String message = editText.getText().toString();
+      intent.putExtra(EXTRA_MESSAGE, message);
+      startActivity(intent);
     }
 
 }
