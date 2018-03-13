@@ -30,7 +30,8 @@ public class menu extends AppCompatActivity implements OnClickListener {
         contentTxt = (TextView)findViewById(R.id.scan_content);
         loginBtn = findViewById(R.id.login_button);
         scanBtn.setOnClickListener(this);//makes programe listen to the click
-        loginBtn.setOnClickListener(this);
+
+
 
     }
 
@@ -60,9 +61,10 @@ public class menu extends AppCompatActivity implements OnClickListener {
             toast.show();
         }
 
-
     }
+
       public void sendMessage(View view) {
+          loginBtn.setOnClickListener(this);//terug boven zetten alsz dit niet werkt
       Intent intent = new Intent(this, login_activity.class);
       EditText editText = (EditText) findViewById(R.id.login_button);//
       String message = editText.getText().toString();
