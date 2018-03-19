@@ -42,11 +42,8 @@ public class menu extends AppCompatActivity implements OnClickListener {
             IntentIntegrator scanIntegrator = new IntentIntegrator(this);
             scanIntegrator.initiateScan();//vraagt om de app te downloaden als die nog niet is gedownload
         }
-        else if (v.getId()==R.id.login_button){
+        if (v.getId()==R.id.login_button){
             Intent intent = new Intent(this, login_activity.class);
-            EditText editText = (EditText) findViewById(R.id.login_button);//
-            String message = editText.getText().toString();
-            intent.putExtra(EXTRA_MESSAGE, message);//geeft data mee met intent
             startActivity(intent);
         }
 
