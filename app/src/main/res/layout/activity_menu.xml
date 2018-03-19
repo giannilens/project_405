@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/scan_button"
         android:layout_below="@+id/scan_button"
-        android:text="login"
+        android:text="@string/login"
         app:layout_anchor="@+id/relativeLayout"
         app:layout_anchorGravity="right|top" />
 

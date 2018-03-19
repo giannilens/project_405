@@ -28,10 +28,10 @@ public class menu extends AppCompatActivity implements OnClickListener {
         scanBtn = (Button)findViewById(R.id.scan_button);
         formatTxt = (TextView)findViewById(R.id.scan_format);
         contentTxt = (TextView)findViewById(R.id.scan_content);
-        loginBtn = findViewById(R.id.login_button);
+        loginBtn = (Button)findViewById(R.id.login_button);
         scanBtn.setOnClickListener(this);//makes programe listen to the click
-        loginBtn.setOnClickListener(sendMessage());//terug boven zetten alsz dit niet werkt
-
+        //loginBtn.setOnClickListener(sendMessage());//terug boven zetten alsz dit niet werkt
+        loginBtn.setOnClickListener(this);
 
     }
 
@@ -39,10 +39,17 @@ public class menu extends AppCompatActivity implements OnClickListener {
     public void onClick(View v){
     //respond to clicks
         if(v.getId()==R.id.scan_button) {
-            //scan
+            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
+            scanIntegrator.initiateScan();//vraagt om de app te downloaden als die nog niet is gedownload
         }
-        IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-        scanIntegrator.initiateScan();//vraagt om de app te downloaden als die nog niet is gedownload
+        else if (v.getId()==R.id.login_button){
+            Intent intent = new Intent(this, login_activity.class);
+            EditText editText = (EditText) findViewById(R.id.login_button);//
+            String message = editText.getText().toString();
+            intent.putExtra(EXTRA_MESSAGE, message);//geeft data mee met intent
+            startActivity(intent);
+        }
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
@@ -68,7 +75,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
       Intent intent = new Intent(this, login_activity.class);
       EditText editText = (EditText) findViewById(R.id.login_button);//
       String message = editText.getText().toString();
-      intent.putExtra(EXTRA_MESSAGE, message);
+      intent.putExtra(EXTRA_MESSAGE, message);//geeft data mee met intent
       startActivity(intent);
     }
 

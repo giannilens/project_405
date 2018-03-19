@@ -14,8 +14,8 @@ public class login_activity extends AppCompatActivity {
         setContentView(R.layout.activity_login_activity);
 
         Intent intent = getIntent();
-        String message = intent.getStringExtra(menu.EXTRA_MESSAGE);
+        String message = intent.getStringExtra(menu.EXTRA_MESSAGE);//is nuteloze text die mee wordt gestuurd
         TextView textView = findViewById(R.id.textView);
-        textView.setText(message);
+        textView.setText(message);//hiet wordt die text in de textview gezet
     }
 }
