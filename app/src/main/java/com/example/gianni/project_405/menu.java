@@ -1,9 +1,9 @@
 package com.example.gianni.project_405;
 
+import android.annotation.SuppressLint;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.example.gianni.project_405.activities.login_activity;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -68,7 +68,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
       public void sendMessage(View view) {
 
       Intent intent = new Intent(this, login_activity.class);
-      EditText editText = (EditText) findViewById(R.id.login_button);//
+      @SuppressLint("WrongViewCast") EditText editText = (EditText) findViewById(R.id.login_button);//
       String message = editText.getText().toString();
       intent.putExtra(EXTRA_MESSAGE, message);//geeft data mee met intent
       startActivity(intent);

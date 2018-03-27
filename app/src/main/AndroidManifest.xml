@@ -17,6 +17,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".login_activity"
+            >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+          <!--  <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".menu" />-->
+        </activity>
+        <activity android:name=".RegisterActivity"
+            android:parentActivityName=".login_activity">
+
+
+        </activity>
+
 
     </application>
 

@@ -1,4 +1,4 @@
-package com.example.gianni.project_405.activities;
+package com.example.gianni.project_405;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.gianni.project_405.R;
 import com.example.gianni.project_405.adapters.UsersRecyclerAdapter;
 import com.example.gianni.project_405.model.User;
 import com.example.gianni.project_405.sql.DatabaseHelper;

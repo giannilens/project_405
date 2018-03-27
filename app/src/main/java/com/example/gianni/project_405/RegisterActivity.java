@@ -1,4 +1,4 @@
-package com.example.gianni.project_405.activities;
+package com.example.gianni.project_405;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,7 +11,6 @@ import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.View;
 
-import com.example.gianni.project_405.R;
 import com.example.gianni.project_405.helper.InputValidation;
 import com.example.gianni.project_405.model.User;
 import com.example.gianni.project_405.sql.DatabaseHelper;

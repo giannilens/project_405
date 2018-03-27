@@ -9,7 +9,7 @@
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:paddingTop="20dp"
-    tools:context=".activities.login_activity">
+    tools:context=".login_activity">
 
     <android.support.v7.widget.LinearLayoutCompat
         android:layout_width="match_parent"
