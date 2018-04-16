@@ -23,13 +23,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "UserManager.db";
 
     // User table name
-    private static final String TABLE_USER = "user";
+    private static final String TABLE_USER = "users";
+    private static final String TABLE_CONTENT = "content";
 
     // User Table Columns names
-    private static final String COLUMN_USER_ID = "user_id";
-    private static final String COLUMN_USER_NAME = "user_name";
-    private static final String COLUMN_USER_EMAIL = "user_email";
-    private static final String COLUMN_USER_PASSWORD = "user_password";
+    private static final String COLUMN_USER_ID = "id";
+    private static final String COLUMN_USER_NAME = "name";
+    private static final String COLUMN_USER_EMAIL = "email";
+    private static final String COLUMN_USER_PASSWORD = "password";
+
+    // content table columns names
+    private static final String COLUMN_CONTENT_ID = "id";
+    private static final String COLUMN_CONTENT_NAME = "user_id";
+    private static final String COLUMN_CONTENT_BARCODE = "barcode";
+    private static final String COLUMN_CONTENT_time = "time";
+
 
     // create table sql query
     private String CREATE_USER_TABLE = "CREATE TABLE " + TABLE_USER + "("
