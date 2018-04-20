@@ -36,7 +36,7 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        getSupportActionBar().hide();
+        getSupportActionBar().hide(); // check of dit er voor zorgt dat de pijl terug weg is
 
         initViews();
         initListeners();
