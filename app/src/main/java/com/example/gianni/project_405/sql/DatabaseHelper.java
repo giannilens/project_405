@@ -18,10 +18,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Database Version
     private static final int DATABASE_VERSION = 1;
-    private static final string Login_Name="gianni";
-    private static final string Login_pasword="testtest123";
+    private static final String Login_Name="gianni";
+    private static final String Login_pasword="testtest123";
     private static final String DATABASE_NAME = "project_405";
-    private static final string Database="project.vangehugten.org"
+    private static final String Database="project.vangehugten.org";
 
     // User table name
     private static final String TABLE_USER = "users";
