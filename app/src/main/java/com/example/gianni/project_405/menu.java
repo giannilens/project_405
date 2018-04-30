@@ -30,6 +30,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
 
     private Button scanBtn, loginBtn;
     private TextView formatTxt, contentTxt;
+    private TextView tvIsConnected;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -42,6 +43,13 @@ public class menu extends AppCompatActivity implements OnClickListener {
         scanBtn.setOnClickListener(this);//makes programe listen to the click
         //loginBtn.setOnClickListener(sendMessage());//terug boven zetten alsz dit niet werkt
         loginBtn.setOnClickListener(this);
+        if(isConnected()){
+            tvIsConnected.setBackgroundColor(0xFF00CC00);
+            tvIsConnected.setText("You are conncted");
+        }
+        else{
+            tvIsConnected.setText("You are NOT conncted");
+        }
 
     }
 
@@ -74,6 +82,14 @@ public class menu extends AppCompatActivity implements OnClickListener {
             toast.show();
         }
 
+    }
+    public boolean isConnected(){
+        ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Activity.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
+        if (networkInfo != null && networkInfo.isConnected())
+            return true;
+        else
+            return false;
     }
 
    /* public void sendMessage(View view) {
