@@ -121,6 +121,8 @@ public class menu extends AppCompatActivity implements OnClickListener {
             JSONObject data = new JSONObject();
             data.accumulate("user_id", "1");
             data.accumulate("barcode", "testing");
+            JSONObject complete= new JSONObject();
+            complete.accumulate("data",data);
             // url where the data will be posted
 
 
@@ -128,7 +130,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
 
             // 4. convert JSONObject to JSON to String
             json = data.toString();
-            Log.d("json", json);
+            Log.d("json", json  );
 
             // 5. set json to StringEntity
             StringEntity se = new StringEntity(json);
