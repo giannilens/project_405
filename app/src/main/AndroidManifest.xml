@@ -3,6 +3,7 @@
     package="com.example.gianni.project_405">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -14,18 +15,18 @@
         <activity android:name=".menu">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".login_activity">
-            android:parentActivityName=".menu">
-            The meta-data tag is required if you support API level 15 and lower
-           <meta-data
+        <activity android:name=".login_activity"
+            >
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+          <!--  <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value=".menu" />
-
+                android:value=".menu" />-->
+        </activity>
+        <activity android:name=".RegisterActivity"
+            android:parentActivityName=".login_activity">
         </activity>
     </application>
-
 </manifest>

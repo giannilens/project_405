@@ -9,6 +9,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/mariadb-java-client-2.2.3" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />
