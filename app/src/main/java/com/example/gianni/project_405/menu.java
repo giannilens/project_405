@@ -133,16 +133,16 @@ public class menu extends AppCompatActivity implements OnClickListener {
             Log.d("json", json  );
 
             // 5. set json to StringEntity
-            StringEntity se = new StringEntity(json);
-            Log.d("se",se.toString());
+            StringEntity se = new StringEntity("data="+json);
+            Log.d("string",se.toString());
 
             // 6. set httpPost Entity
            httpPost.setEntity(se);
 
 
             // 7. Set some headers to inform server about the type of the content
-            httpPost.setHeader("Accept", "application/json");
-            httpPost.setHeader("Content-type", "application/json");
+           // httpPost.setHeader("Accept", "application/json");
+            //httpPost.setHeader("Content-type", "application/json");
 
             // 8. Execute POST request to the given URL
             HttpResponse httpResponse = httpclient.execute(httpPost);
