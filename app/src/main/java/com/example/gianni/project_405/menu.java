@@ -133,7 +133,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
             Log.d("json", json  );
 
             // 5. set json to StringEntity
-            StringEntity se = new StringEntity("data="+json);
+            StringEntity se = new StringEntity(json);
             Log.d("string",se.toString());
 
             // 6. set httpPost Entity
