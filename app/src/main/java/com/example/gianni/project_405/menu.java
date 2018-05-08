@@ -41,6 +41,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
     private Button scanBtn, loginBtn;
     private TextView formatTxt, contentTxt;
     private TextView appIsConnected;
+    public String scanContent ;
 
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -83,7 +84,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult.getContents() != null) {//hier gaat die kijken of er een data zit in intentResult zit deze functie
             //we have a result
-            String scanContent = scanningResult.getContents();
+            scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
             formatTxt.setText("FORMAT: " + scanFormat);
             contentTxt.setText("CONTENT: " + scanContent);
@@ -104,7 +105,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
         else
             return false;
     }
-    public static String POST (String url){
+    public static String POST(String url, String scanContent){
         InputStream inputStream = null;
         String result = "";
         try {
@@ -120,7 +121,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
             // 3. build jsonObject
             JSONObject data = new JSONObject();
             data.accumulate("user_id", "1");
-            data.accumulate("barcode", "testing");
+            data.accumulate("barcode", scanContent);
             JSONObject complete= new JSONObject();
             complete.accumulate("data",data);
             // url where the data will be posted
@@ -179,7 +180,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
         @Override
         protected String doInBackground(String... urls) {
 
-            return POST(urls[0]);
+            return POST(urls[0],scanContent);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
