@@ -36,6 +36,8 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+
+
 public class menu extends AppCompatActivity implements OnClickListener {
 
     private Button scanBtn, loginBtn;
@@ -88,6 +90,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
             String scanFormat = scanningResult.getFormatName();
             formatTxt.setText("FORMAT: " + scanFormat);
             contentTxt.setText("CONTENT: " + scanContent);
+
             new HttpAsyncTask().execute("https://project.vangehugten.org/listener_barcode.php");
 
         } else {
@@ -105,7 +108,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
         else
             return false;
     }
-    public String POST(String url, String scanContent){
+    public String POST_barcode(String url, String scanContent){
         InputStream inputStream = null;
         String result = "";
         try {
@@ -175,11 +178,12 @@ public class menu extends AppCompatActivity implements OnClickListener {
         return result;
 
     }
-    private class HttpAsyncTask extends AsyncTask<String, Void, String> {
+
+
+   final public class HttpAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
-
-            return POST(urls[0],scanContent);
+            return POST_barcode(urls[0], scanContent);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
@@ -187,6 +191,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
             Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
+
 
    /* public void sendMessage(View view) {
 

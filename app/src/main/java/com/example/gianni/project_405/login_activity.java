@@ -1,6 +1,7 @@
 package com.example.gianni.project_405;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
@@ -9,10 +10,26 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatButton;
 import android.support.v7.widget.AppCompatTextView;
+import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.gianni.project_405.helper.InputValidation;
 import com.example.gianni.project_405.sql.DatabaseHelper;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import com.example.gianni.project_405.menu.HttpAsyncTask;
 
 public class login_activity extends AppCompatActivity implements View.OnClickListener {
     private final AppCompatActivity activity = login_activity.this;
@@ -22,8 +39,8 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
     private TextInputLayout textInputLayoutEmail;
     private TextInputLayout textInputLayoutPassword;
 
-    private TextInputEditText textInputEditTextEmail;
-    private TextInputEditText textInputEditTextPassword;
+    static TextInputEditText textInputEditTextEmail;
+    static TextInputEditText textInputEditTextPassword;
 
     private AppCompatButton appCompatButtonLogin;
 
@@ -88,9 +105,7 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.appCompatButtonLogin:
-               String passwd= textInputEditTextPassword.getText().toString().trim();
-               String email = textInputEditTextEmail.getText().toString().trim();
-
+                 new test().execute("https://project.vangehugten.org/listener.php");
                 //verifyFromSQLite();
                 break;
             case R.id.textViewLinkRegister:
@@ -101,41 +116,104 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
         }
     }
 
-    /**
-     * This method is to validate the input text fields and verify login credentials from SQLite
-     */
-    private void verifyFromSQLite() {
-        if (!inputValidation.isInputEditTextFilled(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
-            return;
-        }
-        if (!inputValidation.isInputEditTextEmail(textInputEditTextEmail, textInputLayoutEmail, getString(R.string.error_message_email))) {
-            return;
-        }
-        if (!inputValidation.isInputEditTextFilled(textInputEditTextPassword, textInputLayoutPassword, getString(R.string.error_message_email))) {
-            return;
-        }
-
-        if (databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim()
-                , textInputEditTextPassword.getText().toString().trim())) {
-
-
-            Intent accountsIntent = new Intent(activity, UsersListActivity.class);
-            accountsIntent.putExtra("EMAIL", textInputEditTextEmail.getText().toString().trim());
-            emptyInputEditText();
-            startActivity(accountsIntent);
-
-
-        } else {
-            // Snack Bar to show success message that record is wrong
-            Snackbar.make(nestedScrollView, getString(R.string.error_valid_email_password), Snackbar.LENGTH_LONG).show();
-        }
-    }
 
     /**
      * This method is to empty all input edit text
+     * if we add reset button
      */
     private void emptyInputEditText() {
         textInputEditTextEmail.setText(null);
         textInputEditTextPassword.setText(null);
     }
+
+    public String POST_login(String url, TextInputEditText _email,TextInputEditText _password){
+        InputStream inputStream = null;
+        String result = "";
+        String passwd = _password.getText().toString().trim();
+        String email = _email.getText().toString().trim().toLowerCase();
+        try {
+
+            // 1. create HttpClient
+            HttpClient httpclient = new DefaultHttpClient();
+
+            // 2. make POST request to the given URL
+            HttpPost httpPost = new HttpPost(url);
+
+            String json = "";
+
+            // 3. build jsonObject
+            JSONObject data = new JSONObject();
+            data.accumulate("email", email);
+            data.accumulate("password", passwd);
+            // url where the data will be posted
+
+
+
+
+            // 4. convert JSONObject to JSON to String
+            json = data.toString();
+            Log.d("json", json  );
+
+            // 5. set json to StringEntity
+            StringEntity se = new StringEntity(json);
+            Log.d("string",se.toString());
+
+            // 6. set httpPost Entity
+            httpPost.setEntity(se);
+
+
+            // 7. Set some headers to inform server about the type of the content
+            // httpPost.setHeader("Accept", "application/json");
+            //httpPost.setHeader("Content-type", "application/json");
+
+            // 8. Execute POST request to the given URL
+            HttpResponse httpResponse = httpclient.execute(httpPost);
+            Log.d("url", String.valueOf(httpPost.getURI()));
+
+            // 9. receive response as inputStream
+            inputStream = httpResponse.getEntity().getContent();
+
+            // 10. convert inputstream to string
+            if(inputStream != null)
+                result = convertInputStreamToString(inputStream);
+            else
+                result = "Did not work!";
+
+        } catch (Exception e) {
+            Log.d("InputStream", e.getLocalizedMessage());
+        }
+
+        // 11. return result
+        // Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        return result;
+    }
+    private static String convertInputStreamToString(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        String line = "";
+        String result = "";
+        while ((line = bufferedReader.readLine()) != null){
+            result += line;
+        }
+        inputStream.close();
+        return result;
+
+    }
+    private class test extends AsyncTask<String, Void, String> {
+        @Override
+        protected String doInBackground(String... urls) {
+
+
+            return POST_login(urls[0],textInputEditTextEmail,textInputEditTextPassword);
+        }
+        // onPostExecute displays the results of the AsyncTask.
+        @Override
+        protected void onPostExecute(String result) {
+            Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+            emptyInputEditText();
+            Intent intent = new Intent(getApplicationContext(), menu.class);
+            startActivity(intent);
+
+        }
+    }
+
 }
