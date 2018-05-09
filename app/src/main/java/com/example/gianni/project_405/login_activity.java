@@ -88,7 +88,10 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.appCompatButtonLogin:
-                verifyFromSQLite();
+               String passwd= textInputEditTextPassword.getText().toString().trim();
+               String email = textInputEditTextEmail.getText().toString().trim();
+
+                //verifyFromSQLite();
                 break;
             case R.id.textViewLinkRegister:
                 // Navigate to RegisterActivity

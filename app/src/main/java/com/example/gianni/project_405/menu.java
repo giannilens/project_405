@@ -105,7 +105,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
         else
             return false;
     }
-    public static String POST(String url, String scanContent){
+    public String POST(String url, String scanContent){
         InputStream inputStream = null;
         String result = "";
         try {
@@ -122,8 +122,6 @@ public class menu extends AppCompatActivity implements OnClickListener {
             JSONObject data = new JSONObject();
             data.accumulate("user_id", "1");
             data.accumulate("barcode", scanContent);
-            JSONObject complete= new JSONObject();
-            complete.accumulate("data",data);
             // url where the data will be posted
 
 
@@ -163,6 +161,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
         }
 
         // 11. return result
+       // Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         return result;
     }
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
@@ -185,7 +184,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(getBaseContext(), "Data Sent!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
         }
     }
 
