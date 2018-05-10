@@ -13,17 +13,21 @@
         android:textColor="#FFF"
         android:textSize="18dp"
         android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
         android:text="is connected?" />
     <Button
         android:id="@+id/login_button"
-        style="@style/Widget.AppCompat.Button.Colored"
+        android:background="@color/colorTextHint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignEnd="@+id/scan_button"
         android:layout_below="@+id/scan_button"
         android:text="@string/login"
         app:layout_anchor="@+id/relativeLayout"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="2dp"
         app:layout_anchorGravity="right|top" />
+
 
     <RelativeLayout
         android:id="@+id/relativeLayout"

@@ -66,6 +66,9 @@ public class menu extends AppCompatActivity implements OnClickListener {
         else{
             appIsConnected.setText("You are NOT conncted");
         }
+        if(user.getName()!=null){
+            loginBtn.setText(user.getName()+" logout");
+        }
 
     }
 
@@ -77,8 +80,15 @@ public class menu extends AppCompatActivity implements OnClickListener {
             scanIntegrator.initiateScan();//vraagt om de app te downloaden als die nog niet is gedownload
         }
         if (v.getId() == R.id.login_button) {
-            Intent intent = new Intent(this, login_activity.class);
-            startActivity(intent);
+            if(user.getName()!=null) {
+                user.setnull();
+                finish();
+                startActivity(getIntent());
+            }
+            else {
+                Intent intent = new Intent(this, login_activity.class);
+                startActivity(intent);
+            }
         }
 
     }
@@ -125,7 +135,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
 
             // 3. build jsonObject
             JSONObject data = new JSONObject();
-            data.accumulate("user_id", "1");
+            data.accumulate("user_id", user.getId());
             data.accumulate("barcode", scanContent);
             // url where the data will be posted
 
