@@ -13,7 +13,6 @@ import android.view.View;
 
 import com.example.gianni.project_405.helper.InputValidation;
 import com.example.gianni.project_405.model.User;
-import com.example.gianni.project_405.sql.DatabaseHelper;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -35,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private AppCompatTextView appCompatTextViewLoginLink;
 
     private InputValidation inputValidation;
-    private DatabaseHelper databaseHelper;
+
     private User user;
 
     @Override
@@ -85,7 +84,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
      */
     private void initObjects() {
         inputValidation = new InputValidation(activity);
-        databaseHelper = new DatabaseHelper(activity);
+
         user = new User();
 
     }
@@ -131,7 +130,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             return;
         }
 
-        if (!databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim())) {
+      /*  if (!databaseHelper.checkUser(textInputEditTextEmail.getText().toString().trim())) {
 
             user.setName(textInputEditTextName.getText().toString().trim());
             user.setEmail(textInputEditTextEmail.getText().toString().trim());
@@ -149,7 +148,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             Snackbar.make(nestedScrollView, getString(R.string.error_email_exists), Snackbar.LENGTH_LONG).show();
         }
 
-
+*/
     }
 
     /**

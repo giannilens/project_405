@@ -3,7 +3,6 @@ package com.example.gianni.project_405;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -14,22 +13,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.gianni.project_405.helper.InputValidation;
-import com.example.gianni.project_405.sql.DatabaseHelper;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONObject;
+import org.json.simple.JSONValue;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import com.example.gianni.project_405.menu.HttpAsyncTask;
+import com.example.gianni.project_405.model.User;
+
+import static com.example.gianni.project_405.menu.user;
+
 
 public class login_activity extends AppCompatActivity implements View.OnClickListener {
     private final AppCompatActivity activity = login_activity.this;
@@ -46,8 +46,8 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
 
     private AppCompatTextView textViewLinkRegister;
 
-    private InputValidation inputValidation;
-    private DatabaseHelper databaseHelper;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +57,6 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
 
         initViews();
         initListeners();
-        initObjects();
     }
 
     /**
@@ -87,14 +86,6 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
         textViewLinkRegister.setOnClickListener(this);
     }
 
-    /**
-     * This method is to initialize objects to be used
-     */
-    private void initObjects() {
-        databaseHelper = new DatabaseHelper(activity);
-        inputValidation = new InputValidation(activity);
-
-    }
 
     /**
      * This implemented method is to listen the click on view
@@ -105,7 +96,7 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.appCompatButtonLogin:
-                 new test().execute("https://project.vangehugten.org/listener.php");
+                 new login_async().execute("https://project.vangehugten.org/listener.php");
                 //verifyFromSQLite();
                 break;
             case R.id.textViewLinkRegister:
@@ -172,19 +163,29 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
 
             // 9. receive response as inputStream
             inputStream = httpResponse.getEntity().getContent();
+            Log.d("response", String.valueOf(inputStream));
 
             // 10. convert inputstream to string
-            if(inputStream != null)
-                result = convertInputStreamToString(inputStream);
-            else
-                result = "Did not work!";
-
+            if(inputStream != null ) {
+                String Return = convertInputStreamToString(inputStream);
+                Log.d("input", Return);
+                JSONObject jsoninput  = new JSONObject(Return);
+                user.setId(jsoninput.getString("id"));
+                user.setName(jsoninput.getString("name"));
+                Log.d("luser",user.getId());
+                Log.d("luser",user.getName());
+                result="login succes";
+            } else {
+                result = "false user combo";
+            }
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
+            result = "false user combo";
         }
 
         // 11. return result
         // Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
+        //Log.d("user",String.valueOf(menu.user.getId()));
         return result;
     }
     private static String convertInputStreamToString(InputStream inputStream) throws IOException {
@@ -198,7 +199,7 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
         return result;
 
     }
-    private class test extends AsyncTask<String, Void, String> {
+    private class login_async extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... urls) {
 
@@ -209,9 +210,12 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
         @Override
         protected void onPostExecute(String result) {
             Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
-            emptyInputEditText();
-            Intent intent = new Intent(getApplicationContext(), menu.class);
-            startActivity(intent);
+
+            if(result != "false user combo") {
+                emptyInputEditText();
+                Intent intent = new Intent(getApplicationContext(), menu.class);
+                startActivity(intent);
+            }
 
         }
     }

@@ -33,6 +33,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.gianni.project_405.model.User;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -44,6 +45,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
     private TextView formatTxt, contentTxt;
     private TextView appIsConnected;
     public String scanContent ;
+    public static User user = new User();
 
     protected void onCreate(Bundle savedInstanceState) {
 
