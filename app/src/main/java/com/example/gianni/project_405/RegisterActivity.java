@@ -107,12 +107,12 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
 
             case R.id.appCompatButtonRegister:
-                if(inputvalidation()&& password_check()) {
-                    new register_async().execute("https://project.vangehugten.org/listener_register.php");
+                if(!password_check()) {
+                    Toast.makeText(getBaseContext(), "passwords don't match", Toast.LENGTH_LONG).show();
                 }else if(!inputvalidation()){
-                Toast.makeText(getBaseContext(), "fill in everything", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getBaseContext(), "fill in everything", Toast.LENGTH_LONG).show();
                 }else{
-                Toast.makeText(getBaseContext(), "passwords don't match", Toast.LENGTH_LONG).show();
+                    new register_async().execute("https://project.vangehugten.org/listener_register.php");
                 }
                 break;
 
@@ -206,7 +206,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 JSONObject jsoninput  = new JSONObject(Return);
                 String id =jsoninput.getString("id");
 
-                result="email already exists";
+                result="id";
             } else {
                 result = "didn't work";
             }
