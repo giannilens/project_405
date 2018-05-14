@@ -28,6 +28,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
+import java.util.Objects;
 
 import static com.example.gianni.project_405.menu.user;
 
@@ -124,20 +129,24 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
 
     private boolean inputvalidation(){
-        if(textInputEditTextName.getText().toString().trim() == ""){
+        if(Objects.equals(textInputEditTextName.getText().toString().trim(), "")){
             return false;
-        }else if(textInputEditTextEmail.getText().toString().trim() == ""){
+        }else if(Objects.equals(textInputEditTextEmail.getText().toString().trim(), "")){
             return false;
-        }else if((textInputEditTextPassword.getText().toString().trim() == "")||(textInputEditTextConfirmPassword.getText().toString().trim() == "")){
+        }else if(Objects.equals(textInputEditTextPassword.getText().toString().trim() , "")||Objects.equals(textInputEditTextConfirmPassword.getText().toString().trim() , "")){
             return false;
         }
         return true;
     }
     private boolean password_check(){
-        if(textInputEditTextConfirmPassword.getText().toString().trim()!=textInputEditTextPassword.getText().toString().trim()){
-            return  false;
+        Log.d("passwd",textInputEditTextConfirmPassword.getText().toString());
+        Log.d("passwd",textInputEditTextPassword.getText().toString());
+        String passwd=textInputEditTextPassword.getText().toString().trim();
+        String passwdcheck=textInputEditTextConfirmPassword.getText().toString().trim();
+        if(Objects.equals(passwd,passwdcheck)){
+            return  true;
         }
-        return true;
+        return false;
     }
 
     /**
@@ -149,12 +158,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         textInputEditTextPassword.setText(null);
         textInputEditTextConfirmPassword.setText(null);
     }
-    public String POST_register(String url, TextInputEditText _email,TextInputEditText _password,TextInputEditText _name ){
+    public String POST_register(String url, TextInputEditText _email,TextInputEditText _password,TextInputEditText _name ) throws NoSuchAlgorithmException {
         InputStream inputStream = null;
         String result = "";
         String name= _name.getText().toString().trim();
         String passwd = _password.getText().toString().trim();
         String email = _email.getText().toString().trim().toLowerCase();
+
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] hash = digest.digest(passwd.getBytes(StandardCharsets.UTF_8));
+        String encoded = Base64.getEncoder().encodeToString(hash);
         try {
 
             // 1. create HttpClient
@@ -201,18 +214,19 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
             // 10. convert inputstream to string
             if(inputStream != null ) {
+
                 String Return = convertInputStreamToString(inputStream);
                 Log.d("input", Return);
                 JSONObject jsoninput  = new JSONObject(Return);
-                String id =jsoninput.getString("id");
+                result =jsoninput.getString("id");
 
-                result="id";
+
             } else {
                 result = "didn't work";
             }
         } catch (Exception e) {
             Log.d("InputStream", e.getLocalizedMessage());
-            result = "registered";
+            result = "failed";
         }
 
         // 11. return result
@@ -236,14 +250,14 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected String doInBackground(String... urls) {
 
 
-            return POST_register(urls[0],textInputEditTextEmail,textInputEditTextPassword,textInputEditTextPassword);
+            return POST_register(urls[0],textInputEditTextEmail,textInputEditTextPassword,textInputEditTextName);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
         protected void onPostExecute(String result) {
             Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
 
-            if(result != "false user combo") {
+            if(result == "worked") {
                 emptyInputEditText();
                 Intent intent = new Intent(getApplicationContext(), menu.class);
                 startActivity(intent);

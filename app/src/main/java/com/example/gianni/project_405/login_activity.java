@@ -174,7 +174,7 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
                 user.setName(jsoninput.getString("name"));
                 Log.d("luser",user.getId());
                 Log.d("luser",user.getName());
-                result="login succes";
+                result="login success";
             } else {
                 result = "false user combo";
             }
