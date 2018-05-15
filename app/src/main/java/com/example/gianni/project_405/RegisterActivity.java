@@ -257,7 +257,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 e.printStackTrace();
             }
             byte[] hash = digest.digest(passwd.getBytes(StandardCharsets.UTF_8));//set to hex
-           char[] between= Hex.encodeHex(hash);
+            char[] between= Hex.encodeHex(hash);
             String encoded = String.copyValueOf(between);
 
 
@@ -271,7 +271,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         protected void onPostExecute(String result) {
             Toast.makeText(getBaseContext(), result, Toast.LENGTH_LONG).show();
 
-            if(result == "worked") {
+            if(Objects.equals(result, "worked")) {
                 emptyInputEditText();
                 Intent intent = new Intent(getApplicationContext(), menu.class);
                 startActivity(intent);

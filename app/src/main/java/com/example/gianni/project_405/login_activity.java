@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -25,10 +26,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 import com.example.gianni.project_405.model.User;
 
 import static com.example.gianni.project_405.menu.user;
+import static java.security.MessageDigest.getInstance;
 
 
 public class login_activity extends AppCompatActivity implements View.OnClickListener {
@@ -117,10 +122,10 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
         textInputEditTextPassword.setText(null);
     }
 
-    public String POST_login(String url, TextInputEditText _email,TextInputEditText _password){
+    public String POST_login(String url, TextInputEditText _email,String _password){
         InputStream inputStream = null;
         String result = "";
-        String passwd = _password.getText().toString().trim();
+        String passwd = _password;
         String email = _email.getText().toString().trim().toLowerCase();
         try {
 
@@ -203,8 +208,19 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
         @Override
         protected String doInBackground(String... urls) {
 
+            String passwd=textInputEditTextPassword.getText().toString().trim();
+            MessageDigest digest = null;
+            try {
+                digest = getInstance("SHA-256");
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            byte[] hash = digest.digest(passwd.getBytes(StandardCharsets.UTF_8));//set to hex
+            char[] between= Hex.encodeHex(hash);
+            String encoded = String.copyValueOf(between);
 
-            return POST_login(urls[0],textInputEditTextEmail,textInputEditTextPassword);
+
+            return POST_login(urls[0],textInputEditTextEmail,encoded);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
