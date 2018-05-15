@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TextInputEditText;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.widget.NestedScrollView;
@@ -17,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.gianni.project_405.model.User;
 
+import org.apache.commons.codec.binary.Hex;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -31,10 +31,10 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.Objects;
 
-import static com.example.gianni.project_405.menu.user;
+
+import static java.security.MessageDigest.getInstance;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -158,16 +158,16 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         textInputEditTextPassword.setText(null);
         textInputEditTextConfirmPassword.setText(null);
     }
-    public String POST_register(String url, TextInputEditText _email,TextInputEditText _password,TextInputEditText _name ) throws NoSuchAlgorithmException {
+    public String POST_register(String url, TextInputEditText _email, String _password, TextInputEditText _name )  {
         InputStream inputStream = null;
         String result = "";
         String name= _name.getText().toString().trim();
-        String passwd = _password.getText().toString().trim();
-        String email = _email.getText().toString().trim().toLowerCase();
+        String passwd = _password;
+        String email = _email.getText().toString().trim().toLowerCase();;
+        Log.d("passwd",passwd);
 
-        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] hash = digest.digest(passwd.getBytes(StandardCharsets.UTF_8));
-        String encoded = Base64.getEncoder().encodeToString(hash);
+
+
         try {
 
             // 1. create HttpClient
@@ -249,8 +249,22 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         @Override
         protected String doInBackground(String... urls) {
 
+            String passwd=textInputEditTextPassword.getText().toString().trim();
+            MessageDigest digest = null;
+            try {
+                digest = getInstance("SHA-256");
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            byte[] hash = digest.digest(passwd.getBytes(StandardCharsets.UTF_8));//set to hex
+           char[] between= Hex.encodeHex(hash);
+            String encoded = String.copyValueOf(between);
 
-            return POST_register(urls[0],textInputEditTextEmail,textInputEditTextPassword,textInputEditTextName);
+
+            Log.d("hash",encoded);
+
+
+            return POST_register(urls[0],textInputEditTextEmail,encoded,textInputEditTextName);
         }
         // onPostExecute displays the results of the AsyncTask.
         @Override
