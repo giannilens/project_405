@@ -69,6 +69,9 @@ public class menu extends AppCompatActivity implements OnClickListener {
         if(user.getName()!=null){
             loginBtn.setText(user.getName()+" logout");
         }
+        if (user.getId()==null){
+            scanBtn.setVisibility(View.GONE);
+        }
 
     }
 
