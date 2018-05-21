@@ -59,7 +59,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
         scanBtn.setOnClickListener(this);//makes programe listen to the click
         //loginBtn.setOnClickListener(sendMessage());//terug boven zetten alsz dit niet werkt
         loginBtn.setOnClickListener(this);
-        if(isConnected()){
+        if(isConnected()){//kijkt of je internet verbinding hebt
             appIsConnected.setBackgroundColor(0xFF00CC00);
             appIsConnected.setText("You are conncted");
         }
@@ -69,26 +69,26 @@ public class menu extends AppCompatActivity implements OnClickListener {
         if(user.getName()!=null){
             loginBtn.setText(user.getName()+" logout");
         }
-        if (user.getId()==null){
+        if (user.getId()==null){//als je niet ingelogd bent is er geen scan button te zein
             scanBtn.setVisibility(View.GONE);
         }
 
     }
 
 
-    public void onClick(View v) {
+    public void onClick(View v) {//opent dit als er op een button wordt geklikt en checked het id van die button
         //respond to clicks
         if (v.getId() == R.id.scan_button) {
-            IntentIntegrator scanIntegrator = new IntentIntegrator(this);
-            scanIntegrator.initiateScan();//vraagt om de app te downloaden als die nog niet is gedownload
+            IntentIntegrator scanIntegrator = new IntentIntegrator(this);//opent object voor alles in te zetten
+            scanIntegrator.initiateScan();//opent de scanner
         }
         if (v.getId() == R.id.login_button) {
-            if(user.getName()!=null) {
+            if(user.getName()!=null) {//kijkt of er al een user is anders logt die uit
                 user.setnull();
                 finish();
                 startActivity(getIntent());
             }
-            else {
+            else {//als er nog geen user is dan gaat hij naar de login pagina
                 Intent intent = new Intent(this, login_activity.class);
                 startActivity(intent);
             }
