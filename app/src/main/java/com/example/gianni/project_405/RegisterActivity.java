@@ -112,13 +112,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         switch (v.getId()) {
 
             case R.id.appCompatButtonRegister:
-                if(!password_check()) {
-                    Toast.makeText(getBaseContext(), "passwords don't match", Toast.LENGTH_LONG).show();
-                }else if(!inputvalidation()){
+                 if(!inputvalidation()){
                     Toast.makeText(getBaseContext(), "fill in everything", Toast.LENGTH_LONG).show();
-                }else{
+                 }else if(!password_check()) {
+                     Toast.makeText(getBaseContext(), "passwords don't match", Toast.LENGTH_LONG).show();
+                 }else{
                     new register_async().execute("https://project.vangehugten.org/listener_register.php");
-                }
+                 }
                 break;
 
             case R.id.appCompatTextViewLoginLink:

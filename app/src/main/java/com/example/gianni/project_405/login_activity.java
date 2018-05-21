@@ -102,7 +102,6 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.appCompatButtonLogin:
                  new login_async().execute("https://project.vangehugten.org/listener.php");
-                //verifyFromSQLite();
                 break;
             case R.id.textViewLinkRegister:
                 // Navigate to RegisterActivity
@@ -144,8 +143,6 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
             // url where the data will be posted
 
 
-
-
             // 4. convert JSONObject to JSON to String
             json = data.toString();
             Log.d("json", json  );
@@ -179,7 +176,7 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
                 user.setName(jsoninput.getString("name"));
                 Log.d("luser",user.getId());
                 Log.d("luser",user.getName());
-                result="login success";
+                result="hey "+user.getName();
             } else {
                 result = "false user combo";
             }
@@ -208,7 +205,7 @@ public class login_activity extends AppCompatActivity implements View.OnClickLis
         @Override
         protected String doInBackground(String... urls) {
 
-            String passwd=textInputEditTextPassword.getText().toString().trim();
+            String passwd=textInputEditTextPassword.getText().toString().trim();//trim is voor spaties van voor en van achter weg te doen
             MessageDigest digest = null;
             try {
                 digest = getInstance("SHA-256");

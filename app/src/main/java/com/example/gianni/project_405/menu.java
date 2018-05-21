@@ -79,7 +79,7 @@ public class menu extends AppCompatActivity implements OnClickListener {
     public void onClick(View v) {//opent dit als er op een button wordt geklikt en checked het id van die button
         //respond to clicks
         if (v.getId() == R.id.scan_button) {
-            IntentIntegrator scanIntegrator = new IntentIntegrator(this);//opent object voor alles in te zetten
+            IntentIntegrator scanIntegrator = new IntentIntegrator(this);//maakt een object aan van de intentIntegratior class
             scanIntegrator.initiateScan();//opent de scanner
         }
         if (v.getId() == R.id.login_button) {
@@ -98,15 +98,15 @@ public class menu extends AppCompatActivity implements OnClickListener {
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         //retrieve scan result
-        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);//de barcode en type wordt oppgeslagen in de intentResult classe
         if (scanningResult.getContents() != null) {//hier gaat die kijken of er een data zit in intentResult zit deze functie
             //we have a result
-            scanContent = scanningResult.getContents();
+            scanContent = scanningResult.getContents();//de barcode wordt "public opgeslagen"
             String scanFormat = scanningResult.getFormatName();
-            formatTxt.setText("FORMAT: " + scanFormat);
+            formatTxt.setText("FORMAT: " + scanFormat);//data wordt getoont op het scerm
             contentTxt.setText("CONTENT: " + scanContent);
 
-            new HttpAsyncTask().execute("https://project.vangehugten.org/listener_barcode.php");
+            new HttpAsyncTask().execute("https://project.vangehugten.org/listener_barcode.php"); //de functie voor de http json comunicatie wordt opgestart
 
         } else {
             Toast toast = Toast.makeText(getApplicationContext(),
